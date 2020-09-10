@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  tinylicious:
+  - apiVersion: v1
+    created: "2020-09-10T13:52:47.348378311-07:00"
+    description: Fluid Framework Tinylicious server
+    digest: 75555b1dc06ced6de7f9d06cf1996a31577542c39a665baee1b2cf9b4c8a60d8
+    home: https://github.com/kurtb/charts
+    icon: https://raw.githubusercontent.com/microsoft/FluidFramework/main/server/gateway/public/images/bindy.svg
+    name: tinylicious
+    urls:
+    - https://kurtb.github.com/charts/releases/tinylicious-0.1.0.tgz
+    version: 0.1.0
+generated: "2020-09-10T13:52:47.348000173-07:00"

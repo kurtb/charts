@@ -1,0 +1,18 @@
+# Fluid image version
+image: kurtberglund/tinylicious:latest
+
+# Specify a imagePullPolicy
+# ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+imagePullPolicy: IfNotPresent
+
+name: tinylicious
+
+host: add_your_host_here
+clusterIssuer: add_your_issuer_here
+
+ingress:
+  class: nginx
+
+persistence:
+  size: 128Gi
+  accessMode: ReadWriteOnce
