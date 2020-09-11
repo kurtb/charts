@@ -20,6 +20,9 @@ spec:
         app: {{ template "tinylicious.name" . }}
         release: {{ .Release.Name }}
     spec:
+      # allows mounted data directory to be owned by the node user
+      securityContext:
+        fsGroup: 1000
       containers:
       - name: {{ template "tinylicious.fullname" . }}
         image: "{{ .Values.image }}"
