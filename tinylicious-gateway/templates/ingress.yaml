@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "tinylicious-gateway.fullname" . }}
+  labels:
+    app: {{ template "tinylicious-gateway.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    kubernetes.io/ingress.class: {{ .Values.ingress.class }}
+    cert-manager.io/cluster-issuer: {{ .Values.clusterIssuer }}
+    nginx.org/websocket-services: {{ template "tinylicious-gateway.fullname" . }}
+    nginx.org/proxy-send-timeout: "7200s"
+    nginx.org/proxy-read-timeout: "7200s"
+    nginx.org/client-max-body-size: "100m"
+    ingress.kubernetes.io/proxy-body-size: "100m"
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.host }}
+    secretName: {{ template "tinylicious-gateway.fullname" . }}-tls
+  rules:
+  - host: {{ .Values.host }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ template "tinylicious-gateway.fullname" . }}
+          servicePort: 80

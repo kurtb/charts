@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "tinylicious-gateway.fullname" . }}
+  labels:
+    app: {{ template "tinylicious-gateway.name" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  selector:
+    matchLabels:
+      app: {{ template "tinylicious-gateway.name" . }}
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      labels:
+        app: {{ template "tinylicious-gateway.name" . }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: {{ template "tinylicious-gateway.fullname" . }}
+        image: "{{ .Values.image }}"
+        imagePullPolicy: {{ default "" .Values.imagePullPolicy | quote }}
+        ports:
+        - name: ui
+          containerPort: 3000
+        env:
+        - name: DEBUG
+          value: "fluid:*"
+        - name: NODE_ENV
+          value: production
+        volumeMounts:
+        - name: config
+          mountPath: /usr/src/server/config.json
+          subPath: config.json
+      volumes:
+        - name: config
+          configMap:
+            name: {{ template "tinylicious-gateway.fullname" . }}

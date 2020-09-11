@@ -1,0 +1,16 @@
+# Fluid image version
+image: kurtberglund/tinylicious-gateway:latest
+
+# Specify a imagePullPolicy
+# ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
+imagePullPolicy: IfNotPresent
+
+name: tinylicious-gateway
+
+host: add_your_host_here
+key: gateway_jwt_key
+clusterIssuer: add_your_issuer_here
+tinylicious: tinylicious_host
+
+ingress:
+  class: nginx
