@@ -21,6 +21,7 @@ data:
         },
         "mongo": {
             "collectionNames": {
+                "content": "content",
                 "deltas": "deltas",
                 "documents": "documents",
                 "partitions": "partitions",
